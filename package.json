@@ -1,0 +1,22 @@
+{
+  "name": "node-red-contrib-line-pay",
+  "version": "0.0.1",
+  "description": "Node-RED expansion node for LINE Pay",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miura55/node-red-contrib-line-pay.git"
+  },
+  "keywords": [
+    "node-red"
+  ],
+  "author": "KMiura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Miura55/node-red-contrib-line-pay/issues"
+  },
+  "homepage": "https://github.com/Miura55/node-red-contrib-line-pay#readme"
+}

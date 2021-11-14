@@ -12,8 +12,9 @@
   },
   "keywords": [
     "node-red",
-    "LINE",
-    "payment"
+    "LINEPay",
+    "payment",
+    "API"
   ],
   "author": "KMiura",
   "license": "ISC",
@@ -25,5 +26,10 @@
       "linepay": "src/linepay.js"
     }
   },
-  "homepage": "https://github.com/Miura55/node-red-contrib-line-pay#readme"
+  "homepage": "https://github.com/Miura55/node-red-contrib-line-pay#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "crypto-js": "^4.1.1",
+    "uuid": "^8.3.2"
+  }
 }

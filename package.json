@@ -17,7 +17,7 @@
     "API"
   ],
   "author": "KMiura",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Miura55/node-red-contrib-line-pay/issues"
   },

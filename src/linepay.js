@@ -8,24 +8,23 @@ const {
 // Make request headers 
 const MakeHeaders = (method, api, node, body) => {
     let nonce = uuidv4();
-    return {
-        'Content-Type': 'application/json',
-        'X-LINE-ChannelId': node.config.channelId,
-        'X-LINE-Authorization-Nonce': nonce,
-        'X-LINE-Authorization': MakeHash(method, api, body, nonce, node.config.channelSecret)
-    }
-};
-
-// Make hash for Authorization
-const MakeHash = (method, api, body, nonce, channelSecret) => {
+    let channelSecret = node.config.channelSecret;
     let encrypt = null;
+
     if (method == 'GET') {
         encrypt = crypto.HmacSHA256(channelSecret + api + body + nonce, channelSecret);
     } else if (method == 'POST') {
         encrypt = crypto.HmacSHA256(channelSecret + api + JSON.stringify(body) + nonce, channelSecret);
     }
-    return crypto.enc.Base64.stringify(encrypt);
-};
+    console.log(`channel Id: ${node.config.channelId}`);
+    return {
+        'Content-Type': 'application/json',
+        'X-LINE-ChannelId': node.config.channelId,
+        'X-LINE-Authorization-Nonce': nonce,
+        'X-LINE-Authorization': crypto.enc.Base64.stringify(encrypt)
+    }
+}
+
 
 module.exports = function (RED) {
     // call request API
@@ -84,6 +83,41 @@ module.exports = function (RED) {
         });
     }
     RED.nodes.registerType("confirm", ConfirmNode);
+
+    // call check payment status API
+    function CheckPaymentStatusNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+
+        if (node.config) {
+            RED.log.info("Config Name: " + node.config.name);
+        } else {
+            node.error('Missing config setting')
+        }
+
+        node.on('input', async (msg) => {
+            let transactionId = msg.transactionId;
+            let api = `/v3/payments/requests/${transactionId}/check`;
+
+            if (transactionId) {
+                try {
+                    let setting = {
+                        headers: MakeHeaders('GET', api, node, ''),
+                    };
+                    res = await axios.get(node.config.uri + api, setting);
+                    msg.payload = res.data;
+                    node.send(msg);
+                } catch (err) {
+                    RED.log.error(err)
+                    node.error(err);
+                }
+            } else {
+                node.error('msg.transactionId is undefined');
+            }
+        });
+    }
+    RED.nodes.registerType("checkPaymentStatus", CheckPaymentStatusNode);
 
     // config node   
     function LINEPayConfigNode(n) {

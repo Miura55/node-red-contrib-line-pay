@@ -56,6 +56,35 @@ module.exports = function (RED) {
     }
     RED.nodes.registerType("request", RequestNode);
 
+    // call confirm API
+    function ConfirmNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+        if (node.config) {
+            RED.log.info("Config Name: " + node.config.name);
+        } else {
+            RED.log.error('Config Not Found.');
+        }
+        node.on('input', async (msg) => {
+            let transactionId = msg.transactionId;
+            let api = `/v3/payments/${transactionId}/confirm`;
+            let body = msg.payload;
+            try {
+                let setting = {
+                    headers: MakeHeaders('POST', api, node, body),
+                };
+                res = await axios.post(node.config.uri + api, body, setting);
+                msg.payload = res.data;
+                node.send(msg);
+            } catch (err) {
+                RED.log.error(err)
+                node.error(err);
+            }
+        });
+    }
+    RED.nodes.registerType("confirm", ConfirmNode);
+
     // config node   
     function LINEPayConfigNode(n) {
         RED.nodes.createNode(this, n);

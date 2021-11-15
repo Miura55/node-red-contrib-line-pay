@@ -23,17 +23,56 @@
 
 <script type="text/x-red" data-template-name="request">
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
     </div>
     <div class="form-row">
-        <label for="node-input-linepayConfig"><i class="icon-tag"></i> Config</label>
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
         <input id="node-input-linepayConfig">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="request">
     <p>Call request api</p>
+</script>
+
+
+<!-- confirm -->
+<script type="text/javascript">
+    RED.nodes.registerType('confirm', {
+        category: 'LINE Pay',
+        color: '#00B900',
+        defaults: {
+            name: {
+                value: ""
+            },
+            linepayConfig: {
+                value: "",
+                type: "linepay-config"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-check",
+        label: function () {
+            return this.name || "confirm";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="confirm">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
+        <input id="node-input-linepayConfig">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="confirm">
+    <p>Call confirm api</p>
 </script>
 
 <!-- settings -->
@@ -67,19 +106,19 @@
 
 <script type="text/html" data-template-name="linepay-config">
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-bookmark"></i> name</label>
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name">
     </div>
     <div class="form-row">
-        <label for="node-config-input-uri"><i class="fa fa-bookmark"></i>URI</label>
+        <label for="node-config-input-uri"><i class="fa fa-globe"></i>URI</label>
         <input type="text" id="node-config-input-uri">
     </div>
     <div class="form-row">
-        <label for="node-config-input-channelId"><i class="fa fa-bookmark"></i>Channel ID</label>
+        <label for="node-config-input-channelId"><i class="fa fa-id-card-o"></i>Channel ID</label>
         <input type="text" id="node-config-input-channelId">
     </div>
     <div class="form-row">
-        <label for="node-config-input-channelSecret"><i class="fa fa-bookmark"></i>Channel Secret</label>
+        <label for="node-config-input-channelSecret"><i class="fa fa-key"></i>Channel Secret</label>
         <input type="text" id="node-config-input-channelSecret">
     </div>
 </script>

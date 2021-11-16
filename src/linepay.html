@@ -151,6 +151,44 @@
     <p>Call void api</p>
 </script>
 
+<!-- refund -->
+<script type="text/javascript">
+    RED.nodes.registerType('refund', {
+        category: 'LINE Pay',
+        color: '#00B900',
+        defaults: {
+            name: {
+                value: ""
+            },
+            linepayConfig: {
+                value: "",
+                type: "linepay-config"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-reply",
+        label: function () {
+            return this.name || "Refund";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="refund">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
+        <input id="node-input-linepayConfig">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="refund">
+    <p>Call refund api</p>
+</script>
+
 <!-- check payment status -->
 <script type="text/javascript">
     RED.nodes.registerType('checkPaymentStatus', {

@@ -36,7 +36,6 @@
     <p>Call request api</p>
 </script>
 
-
 <!-- confirm -->
 <script type="text/javascript">
     RED.nodes.registerType('confirm', {
@@ -73,6 +72,44 @@
 
 <script type="text/x-red" data-help-name="confirm">
     <p>Call confirm api</p>
+</script>
+
+<!-- capture -->
+<script type="text/javascript">
+    RED.nodes.registerType('capture', {
+        category: 'LINE Pay',
+        color: '#00B900',
+        defaults: {
+            name: {
+                value: ""
+            },
+            linepayConfig: {
+                value: "",
+                type: "linepay-config"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-list-alt",
+        label: function () {
+            return this.name || "capture";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="capture">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
+        <input id="node-input-linepayConfig">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="capture">
+    <p>Call capture api</p>
 </script>
 
 <!-- check payment status -->

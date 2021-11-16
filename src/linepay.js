@@ -157,6 +157,40 @@ module.exports = function (RED) {
     }
     RED.nodes.registerType("void", VoidNode);
 
+    // call refund API
+    function RefundNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+        if (node.config) {
+            RED.log.info("Config Name: " + node.config.name);
+        } else {
+            RED.log.error('Config Not Found.');
+        }
+
+        node.on('input', async (msg) => {
+            let transactionId = msg.transactionId;
+            let api = `/v3/payments/${transactionId}/refund`;
+            let body = msg.payload;
+            if (transactionId) {
+                try {
+                    let setting = {
+                        headers: MakeHeaders('POST', api, node, body),
+                    };
+                    res = await axios.post(node.config.uri + api, body, setting);
+                    msg.payload = res.data;
+                    node.send(msg);
+                } catch (err) {
+                    RED.log.error(err)
+                    node.error(err);
+                }
+            } else {
+                node.error('msg.transactionId is undefined');
+            }
+        });
+    }
+    RED.nodes.registerType("refund", RefundNode);
+
     // call check payment status API
     function CheckPaymentStatusNode(config) {
         RED.nodes.createNode(this, config);

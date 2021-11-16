@@ -16,7 +16,7 @@
         outputs: 1,
         icon: "font-awesome/fa-book",
         label: function () {
-            return this.name || "request";
+            return this.name || "Request";
         }
     });
 </script>
@@ -54,7 +54,7 @@
         outputs: 1,
         icon: "font-awesome/fa-check",
         label: function () {
-            return this.name || "confirm";
+            return this.name || "Confirm";
         }
     });
 </script>
@@ -74,6 +74,7 @@
     <p>Call confirm api</p>
 </script>
 
+
 <!-- capture -->
 <script type="text/javascript">
     RED.nodes.registerType('capture', {
@@ -90,9 +91,9 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "font-awesome/fa-list-alt",
+        icon: "font-awesome/fa-check",
         label: function () {
-            return this.name || "capture";
+            return this.name || "Capture";
         }
     });
 </script>
@@ -112,6 +113,44 @@
     <p>Call capture api</p>
 </script>
 
+<!-- void -->
+<script type="text/javascript">
+    RED.nodes.registerType('void', {
+        category: 'LINE Pay',
+        color: '#00B900',
+        defaults: {
+            name: {
+                value: ""
+            },
+            linepayConfig: {
+                value: "",
+                type: "linepay-config"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-ban",
+        label: function () {
+            return this.name || "Void";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="void">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
+        <input id="node-input-linepayConfig">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="void">
+    <p>Call void api</p>
+</script>
+
 <!-- check payment status -->
 <script type="text/javascript">
     RED.nodes.registerType('checkPaymentStatus', {
@@ -128,9 +167,9 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "font-awesome/fa-check",
+        icon: "font-awesome/fa-list-alt",
         label: function () {
-            return this.name || "checkPaymentStatus";
+            return this.name || "CheckPaymentStatus";
         }
     });
 </script>

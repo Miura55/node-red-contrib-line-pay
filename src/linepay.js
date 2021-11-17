@@ -191,6 +191,60 @@ module.exports = function (RED) {
     }
     RED.nodes.registerType("refund", RefundNode);
 
+    // call payment details API
+    function PaymentDetailsNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+
+        if (node.config) {
+            RED.log.info("Config Name: " + node.config.name);
+        } else {
+            node.error('Missing config setting')
+        }
+
+        node.on('input', async (msg) => {
+            let transactionId = msg.transactionId;
+            let orderId = msg.payload.orderId;
+            let fields = msg.payload.fields;
+            let api = '/v3/payments';
+            let params = {}
+
+            // set params
+            if (transactionId) {
+                console.log(`transactionId ${transactionId}`);
+                params.transactionId = transactionId;
+            }
+            if (orderId) {
+                console.log(`orderId ${orderId}`);
+                params.orderId = orderId;
+            }
+            if (fields) {
+                console.log(`fields ${fields}`);
+                params.fields = fields;
+            }
+
+            // change parameters to make hash
+            let paramString = Object.keys(params).map(idx => {
+                return encodeURIComponent(idx) + '=' + encodeURIComponent(params[idx])
+            }).join('&');
+
+            try {
+                let setting = {
+                    headers: MakeHeaders('GET', api, node, paramString),
+                    params: params
+                };
+                res = await axios.get(node.config.uri + api, setting);
+                msg.payload = res.data;
+                node.send(msg);
+            } catch (err) {
+                RED.log.error(err)
+                node.error(err);
+            }
+        });
+    }
+    RED.nodes.registerType("paymentDetails", PaymentDetailsNode);
+
     // call check payment status API
     function CheckPaymentStatusNode(config) {
         RED.nodes.createNode(this, config);

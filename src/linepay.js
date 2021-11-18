@@ -293,7 +293,7 @@ module.exports = function (RED) {
         }
 
         node.on('input', async (msg) => {
-            let regKey = msg.payload.regKey;
+            let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/check`;
 
             try {

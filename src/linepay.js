@@ -16,7 +16,7 @@ const MakeHeaders = (method, api, node, body) => {
     } else if (method == 'POST') {
         encrypt = crypto.HmacSHA256(channelSecret + api + JSON.stringify(body) + nonce, channelSecret);
     }
-    console.log(`channel Id: ${node.config.channelId}`);
+
     return {
         'Content-Type': 'application/json',
         'X-LINE-ChannelId': node.config.channelId,
@@ -279,6 +279,44 @@ module.exports = function (RED) {
         });
     }
     RED.nodes.registerType("checkPaymentStatus", CheckPaymentStatusNode);
+
+    // call check RegKey API
+    function CheckRegKeyNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+
+        if (node.config) {
+            RED.log.info("Config Name: " + node.config.name);
+        } else {
+            node.error('Missing config setting')
+        }
+
+        node.on('input', async (msg) => {
+            let regKey = msg.payload.regKey;
+            let api = `/v3/payments/preapprovedPay/${regKey}/check`;
+
+            try {
+                let setting = {};
+                let paramString = '';
+                if ('creditCardAuth' in msg.payload) {
+                    setting.params = {}
+                    setting.params.creditCardAuth = msg.payload.creditCardAuth;
+                    paramString = Object.keys(setting.params).map(idx => {
+                        return encodeURIComponent(idx) + '=' + encodeURIComponent(setting.params[idx])
+                    }).join('&');
+                }
+                setting.headers = MakeHeaders('GET', api, node, paramString);
+                res = await axios.get(node.config.uri + api, setting);
+                msg.payload = res.data;
+                node.send(msg);
+            } catch (err) {
+                RED.log.error(err)
+                node.error(err);
+            }
+        });
+    }
+    RED.nodes.registerType("checkRegKey", CheckRegKeyNode);
 
     // config node   
     function LINEPayConfigNode(n) {

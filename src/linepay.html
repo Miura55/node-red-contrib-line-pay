@@ -303,8 +303,45 @@
     <p>Call check RegKey api</p>
 </script>
 
-<!-- settings -->
+<!-- pay preapproved -->
+<script type="text/javascript">
+    RED.nodes.registerType('payPreapproved', {
+        category: 'LINE Pay',
+        color: '#00B900',
+        defaults: {
+            name: {
+                value: ""
+            },
+            linepayConfig: {
+                value: "",
+                type: "linepay-config"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-credit-card-alt",
+        label: function () {
+            return this.name || "PayPreapproved";
+        }
+    });
+</script>
 
+<script type="text/x-red" data-template-name="payPreapproved">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
+        <input id="node-input-linepayConfig">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="payPreapproved">
+    <p>Call pay preapproved api</p>
+</script>
+
+<!-- settings -->
 <script type="text/javascript">
     RED.nodes.registerType('linepay-config', {
         category: 'config',

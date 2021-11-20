@@ -32,13 +32,15 @@ module.exports = function (RED) {
         var node = this;
         node.config = RED.nodes.getNode(config.linepayConfig);
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             RED.log.error('Config Not Found.');
         }
         node.on('input', async (msg) => {
             let api = '/v3/payments/request';
             let body = msg.payload;
+            RED.log.info(`call ${api}`);
+
             try {
                 let setting = {
                     headers: MakeHeaders('POST', api, node, body),
@@ -60,7 +62,7 @@ module.exports = function (RED) {
         var node = this;
         node.config = RED.nodes.getNode(config.linepayConfig);
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             RED.log.error('Config Not Found.');
         }
@@ -69,6 +71,8 @@ module.exports = function (RED) {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/${transactionId}/confirm`;
             let body = msg.payload;
+            RED.log.info(`call ${api}`);
+
             if (transactionId) {
                 try {
                     let setting = {
@@ -94,7 +98,7 @@ module.exports = function (RED) {
         var node = this;
         node.config = RED.nodes.getNode(config.linepayConfig);
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             RED.log.error('Config Not Found.');
         }
@@ -103,6 +107,8 @@ module.exports = function (RED) {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/authorizations/${transactionId}/capture`;
             let body = msg.payload;
+            RED.log.info(`call ${api}`);
+
             if (transactionId) {
                 try {
                     let setting = {
@@ -128,7 +134,7 @@ module.exports = function (RED) {
         var node = this;
         node.config = RED.nodes.getNode(config.linepayConfig);
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info("LINE Pay Config Name: " + node.config.name);
         } else {
             RED.log.error('Config Not Found.');
         }
@@ -137,6 +143,8 @@ module.exports = function (RED) {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/authorizations/${transactionId}/void`;
             let body = msg.payload;
+            RED.log.info(`call ${api}`);
+
             if (transactionId) {
                 try {
                     let setting = {
@@ -162,7 +170,7 @@ module.exports = function (RED) {
         var node = this;
         node.config = RED.nodes.getNode(config.linepayConfig);
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             RED.log.error('Config Not Found.');
         }
@@ -171,6 +179,8 @@ module.exports = function (RED) {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/${transactionId}/refund`;
             let body = msg.payload;
+            RED.log.info(`call ${api}`);
+
             if (transactionId) {
                 try {
                     let setting = {
@@ -197,7 +207,7 @@ module.exports = function (RED) {
         node.config = RED.nodes.getNode(config.linepayConfig);
 
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             node.error('Missing config setting')
         }
@@ -227,6 +237,7 @@ module.exports = function (RED) {
             let paramString = Object.keys(params).map(idx => {
                 return encodeURIComponent(idx) + '=' + encodeURIComponent(params[idx])
             }).join('&');
+            RED.log.info(`call ${api}${paramString}`);
 
             try {
                 let setting = {
@@ -251,7 +262,7 @@ module.exports = function (RED) {
         node.config = RED.nodes.getNode(config.linepayConfig);
 
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             node.error('Missing config setting')
         }
@@ -259,6 +270,7 @@ module.exports = function (RED) {
         node.on('input', async (msg) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/requests/${transactionId}/check`;
+            RED.log.info(`call ${api}`);
 
             if (transactionId) {
                 try {
@@ -286,7 +298,7 @@ module.exports = function (RED) {
         node.config = RED.nodes.getNode(config.linepayConfig);
 
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             node.error('Missing config setting');
         }
@@ -294,6 +306,7 @@ module.exports = function (RED) {
         node.on('input', async (msg) => {
             let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/check`;
+            RED.log.info(`call ${api}`);
 
             if (msg.regKey) {
                 try {
@@ -328,7 +341,7 @@ module.exports = function (RED) {
         node.config = RED.nodes.getNode(config.linepayConfig);
 
         if (node.config) {
-            RED.log.info("Config Name: " + node.config.name);
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
         } else {
             node.error('Missing config setting');
         }
@@ -337,8 +350,7 @@ module.exports = function (RED) {
             let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/payment`;
             let body = msg.payload;
-            RED.log.info(JSON.stringify(msg.payload));
-            RED.log.info(api);
+            RED.log.info(`call ${api}`);
 
             if (msg.regKey) {
                 try {
@@ -358,6 +370,42 @@ module.exports = function (RED) {
         });
     }
     RED.nodes.registerType("payPreapproved", PayPreapprovedNode);
+
+    // call expire regKey API
+    function ExpireRegKeyNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+
+        if (node.config) {
+            RED.log.info(`LINE Pay Config Name: ${node.config.name}`);
+        } else {
+            node.error('Missing config setting');
+        }
+
+        node.on('input', async (msg) => {
+            let regKey = msg.regKey;
+            let api = `/v3/payments/preapprovedPay/${regKey}/expire`;
+            RED.log.info(`call ${api}`);
+
+            if (msg.regKey) {
+                try {
+                    let setting = {
+                        headers: MakeHeaders('POST', api, node, {})
+                    };
+                    res = await axios.post(node.config.uri + api, {}, setting);
+                    msg.payload = res.data;
+                    node.send(msg);
+                } catch (err) {
+                    RED.log.error(err);
+                    node.error(err);
+                }
+            } else {
+                node.error('msg.regKey is undefined');
+            }
+        });
+    }
+    RED.nodes.registerType("expireRegKey", ExpireRegKeyNode);
 
     // config node   
     function LINEPayConfigNode(n) {

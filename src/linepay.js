@@ -16,7 +16,6 @@ const MakeHeaders = (method, api, node, body) => {
     } else if (method == 'POST') {
         encrypt = crypto.HmacSHA256(channelSecret + api + JSON.stringify(body) + nonce, channelSecret);
     }
-
     return {
         'Content-Type': 'application/json',
         'X-LINE-ChannelId': node.config.channelId,
@@ -48,7 +47,7 @@ module.exports = function (RED) {
                 msg.payload = res.data;
                 node.send(msg);
             } catch (err) {
-                RED.log.error(err)
+                RED.log.error(err);
                 node.error(err);
             }
         });
@@ -79,7 +78,7 @@ module.exports = function (RED) {
                     msg.payload = res.data;
                     node.send(msg);
                 } catch (err) {
-                    RED.log.error(err)
+                    RED.log.error(err);
                     node.error(err);
                 }
             } else {
@@ -113,7 +112,7 @@ module.exports = function (RED) {
                     msg.payload = res.data;
                     node.send(msg);
                 } catch (err) {
-                    RED.log.error(err)
+                    RED.log.error(err);
                     node.error(err);
                 }
             } else {
@@ -147,7 +146,7 @@ module.exports = function (RED) {
                     msg.payload = res.data;
                     node.send(msg);
                 } catch (err) {
-                    RED.log.error(err)
+                    RED.log.error(err);
                     node.error(err);
                 }
             } else {
@@ -212,15 +211,15 @@ module.exports = function (RED) {
 
             // set params
             if (transactionId) {
-                console.log(`transactionId ${transactionId}`);
+                RED.log.info(`transactionId: ${transactionId}`);
                 params.transactionId = transactionId;
             }
             if (orderId) {
-                console.log(`orderId ${orderId}`);
+                RED.log.info(`orderId: ${orderId}`);
                 params.orderId = orderId;
             }
             if (fields) {
-                console.log(`fields ${fields}`);
+                RED.log.info(`fields: ${fields}`);
                 params.fields = fields;
             }
 
@@ -238,7 +237,7 @@ module.exports = function (RED) {
                 msg.payload = res.data;
                 node.send(msg);
             } catch (err) {
-                RED.log.error(err)
+                RED.log.error(err);
                 node.error(err);
             }
         });
@@ -270,7 +269,7 @@ module.exports = function (RED) {
                     msg.payload = res.data;
                     node.send(msg);
                 } catch (err) {
-                    RED.log.error(err)
+                    RED.log.error(err);
                     node.error(err);
                 }
             } else {
@@ -289,34 +288,76 @@ module.exports = function (RED) {
         if (node.config) {
             RED.log.info("Config Name: " + node.config.name);
         } else {
-            node.error('Missing config setting')
+            node.error('Missing config setting');
         }
 
         node.on('input', async (msg) => {
             let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/check`;
 
-            try {
-                let setting = {};
-                let paramString = '';
-                if ('creditCardAuth' in msg.payload) {
-                    setting.params = {}
-                    setting.params.creditCardAuth = msg.payload.creditCardAuth;
-                    paramString = Object.keys(setting.params).map(idx => {
-                        return encodeURIComponent(idx) + '=' + encodeURIComponent(setting.params[idx])
-                    }).join('&');
+            if (msg.regKey) {
+                try {
+                    let setting = {};
+                    let paramString = '';
+                    if ('creditCardAuth' in msg.payload) {
+                        setting.params = {}
+                        setting.params.creditCardAuth = msg.payload.creditCardAuth;
+                        paramString = Object.keys(setting.params).map(idx => {
+                            return encodeURIComponent(idx) + '=' + encodeURIComponent(setting.params[idx])
+                        }).join('&');
+                    }
+                    setting.headers = MakeHeaders('GET', api, node, paramString);
+                    res = await axios.get(node.config.uri + api, setting);
+                    msg.payload = res.data;
+                    node.send(msg);
+                } catch (err) {
+                    RED.log.error(err);
+                    node.error(err);
                 }
-                setting.headers = MakeHeaders('GET', api, node, paramString);
-                res = await axios.get(node.config.uri + api, setting);
-                msg.payload = res.data;
-                node.send(msg);
-            } catch (err) {
-                RED.log.error(err)
-                node.error(err);
+            } else {
+                node.error('msg.regKey is undefined');
             }
         });
     }
     RED.nodes.registerType("checkRegKey", CheckRegKeyNode);
+
+    // call pay preapproved API
+    function PayPreapprovedNode(config) {
+        RED.nodes.createNode(this, config);
+        var node = this;
+        node.config = RED.nodes.getNode(config.linepayConfig);
+
+        if (node.config) {
+            RED.log.info("Config Name: " + node.config.name);
+        } else {
+            node.error('Missing config setting');
+        }
+
+        node.on('input', async (msg) => {
+            let regKey = msg.regKey;
+            let api = `/v3/payments/preapprovedPay/${regKey}/payment`;
+            let body = msg.payload;
+            RED.log.info(JSON.stringify(msg.payload));
+            RED.log.info(api);
+
+            if (msg.regKey) {
+                try {
+                    let setting = {
+                        headers: MakeHeaders('POST', api, node, body)
+                    };
+                    res = await axios.post(node.config.uri + api, body, setting);
+                    msg.payload = res.data;
+                    node.send(msg);
+                } catch (err) {
+                    RED.log.error(err);
+                    node.error(err);
+                }
+            } else {
+                node.error('msg.regKey is undefined');
+            }
+        });
+    }
+    RED.nodes.registerType("payPreapproved", PayPreapprovedNode);
 
     // config node   
     function LINEPayConfigNode(n) {

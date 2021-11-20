@@ -341,6 +341,44 @@
     <p>Call pay preapproved api</p>
 </script>
 
+<!-- expire regkey -->
+<script type="text/javascript">
+    RED.nodes.registerType('expireRegKey', {
+        category: 'LINE Pay',
+        color: '#00B900',
+        defaults: {
+            name: {
+                value: ""
+            },
+            linepayConfig: {
+                value: "",
+                type: "linepay-config"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-ban",
+        label: function () {
+            return this.name || "ExpireRegKey";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="expireRegKey">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-linepayConfig"><i class="fa fa-wrench"></i> Config</label>
+        <input id="node-input-linepayConfig">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="expireRegKey">
+    <p>Call expire regkey api</p>
+</script>
+
 <!-- settings -->
 <script type="text/javascript">
     RED.nodes.registerType('linepay-config', {

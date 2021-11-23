@@ -1,6 +1,6 @@
 <!-- request -->
 <script type="text/javascript">
-    RED.nodes.registerType('request', {
+    RED.nodes.registerType('Request', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -21,7 +21,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="request">
+<script type="text/x-red" data-template-name="Request">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -32,13 +32,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="request">
+<script type="text/x-red" data-help-name="Request">
     <p>Call request api</p>
 </script>
 
 <!-- confirm -->
 <script type="text/javascript">
-    RED.nodes.registerType('confirm', {
+    RED.nodes.registerType('Confirm', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -59,7 +59,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="confirm">
+<script type="text/x-red" data-template-name="Confirm">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -70,14 +70,14 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="confirm">
+<script type="text/x-red" data-help-name="Confirm">
     <p>Call confirm api</p>
 </script>
 
 
 <!-- capture -->
 <script type="text/javascript">
-    RED.nodes.registerType('capture', {
+    RED.nodes.registerType('Capture', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -98,7 +98,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="capture">
+<script type="text/x-red" data-template-name="Capture">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -109,13 +109,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="capture">
+<script type="text/x-red" data-help-name="Capture">
     <p>Call capture api</p>
 </script>
 
 <!-- void -->
 <script type="text/javascript">
-    RED.nodes.registerType('void', {
+    RED.nodes.registerType('Void', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -136,7 +136,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="void">
+<script type="text/x-red" data-template-name="Void">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -147,13 +147,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="void">
+<script type="text/x-red" data-help-name="Void">
     <p>Call void api</p>
 </script>
 
 <!-- refund -->
 <script type="text/javascript">
-    RED.nodes.registerType('refund', {
+    RED.nodes.registerType('Refund', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -174,7 +174,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="refund">
+<script type="text/x-red" data-template-name="Refund">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -185,13 +185,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="refund">
+<script type="text/x-red" data-help-name="Refund">
     <p>Call refund api</p>
 </script>
 
 <!-- payment details -->
 <script type="text/javascript">
-    RED.nodes.registerType('paymentDetails', {
+    RED.nodes.registerType('PaymentDetails', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -212,7 +212,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="paymentDetails">
+<script type="text/x-red" data-template-name="PaymentDetails">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -223,13 +223,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="paymentDetails">
+<script type="text/x-red" data-help-name="PaymentDetails">
     <p>Call payment details api</p>
 </script>
 
 <!-- check payment status -->
 <script type="text/javascript">
-    RED.nodes.registerType('checkPaymentStatus', {
+    RED.nodes.registerType('CheckPaymentStatus', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -250,7 +250,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="checkPaymentStatus">
+<script type="text/x-red" data-template-name="CheckPaymentStatus">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -261,13 +261,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="checkPaymentStatus">
+<script type="text/x-red" data-help-name="CheckPaymentStatus">
     <p>Call check paymaent status api</p>
 </script>
 
 <!-- check RegKey -->
 <script type="text/javascript">
-    RED.nodes.registerType('checkRegKey', {
+    RED.nodes.registerType('CheckRegKey', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -288,7 +288,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="checkRegKey">
+<script type="text/x-red" data-template-name="CheckRegKey">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -299,13 +299,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="checkRegKey">
+<script type="text/x-red" data-help-name="CheckRegKey">
     <p>Call check RegKey api</p>
 </script>
 
 <!-- pay preapproved -->
 <script type="text/javascript">
-    RED.nodes.registerType('payPreapproved', {
+    RED.nodes.registerType('PayPreapproved', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -326,7 +326,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="payPreapproved">
+<script type="text/x-red" data-template-name="PayPreapproved">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -337,13 +337,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="payPreapproved">
+<script type="text/x-red" data-help-name="PayPreapproved">
     <p>Call pay preapproved api</p>
 </script>
 
 <!-- expire regkey -->
 <script type="text/javascript">
-    RED.nodes.registerType('expireRegKey', {
+    RED.nodes.registerType('ExpireRegKey', {
         category: 'LINE Pay',
         color: '#00B900',
         defaults: {
@@ -364,7 +364,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="expireRegKey">
+<script type="text/x-red" data-template-name="ExpireRegKey">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
@@ -375,7 +375,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="expireRegKey">
+<script type="text/x-red" data-help-name="ExpireRegKey">
     <p>Call expire regkey api</p>
 </script>
 

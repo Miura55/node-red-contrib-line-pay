@@ -54,7 +54,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("request", RequestNode);
+    RED.nodes.registerType("Request", RequestNode);
 
     // call confirm API
     function ConfirmNode(config) {
@@ -90,7 +90,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("confirm", ConfirmNode);
+    RED.nodes.registerType("Confirm", ConfirmNode);
 
     // call capture API
     function CaptureNode(config) {
@@ -126,7 +126,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("capture", CaptureNode);
+    RED.nodes.registerType("Capture", CaptureNode);
 
     // call void API
     function VoidNode(config) {
@@ -162,7 +162,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("void", VoidNode);
+    RED.nodes.registerType("Void", VoidNode);
 
     // call refund API
     function RefundNode(config) {
@@ -198,7 +198,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("refund", RefundNode);
+    RED.nodes.registerType("Refund", RefundNode);
 
     // call payment details API
     function PaymentDetailsNode(config) {
@@ -222,7 +222,7 @@ module.exports = function (RED) {
             // set params
             if (transactionId) {
                 RED.log.info(`transactionId: ${transactionId}`);
-                params.transactionId = transactionId;
+                params.transactionId = String(transactionId);
             }
             if (orderId) {
                 RED.log.info(`orderId: ${orderId}`);
@@ -237,7 +237,7 @@ module.exports = function (RED) {
             let paramString = Object.keys(params).map(idx => {
                 return encodeURIComponent(idx) + '=' + encodeURIComponent(params[idx])
             }).join('&');
-            RED.log.info(`call ${api}${paramString}`);
+            RED.log.info(`call ${api}?${paramString}`);
 
             try {
                 let setting = {
@@ -253,7 +253,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("paymentDetails", PaymentDetailsNode);
+    RED.nodes.registerType("PaymentDetails", PaymentDetailsNode);
 
     // call check payment status API
     function CheckPaymentStatusNode(config) {
@@ -289,7 +289,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("checkPaymentStatus", CheckPaymentStatusNode);
+    RED.nodes.registerType("CheckPaymentStatus", CheckPaymentStatusNode);
 
     // call check RegKey API
     function CheckRegKeyNode(config) {
@@ -332,7 +332,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("checkRegKey", CheckRegKeyNode);
+    RED.nodes.registerType("CheckRegKey", CheckRegKeyNode);
 
     // call pay preapproved API
     function PayPreapprovedNode(config) {
@@ -369,7 +369,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("payPreapproved", PayPreapprovedNode);
+    RED.nodes.registerType("PayPreapproved", PayPreapprovedNode);
 
     // call expire regKey API
     function ExpireRegKeyNode(config) {
@@ -405,7 +405,7 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType("expireRegKey", ExpireRegKeyNode);
+    RED.nodes.registerType("ExpireRegKey", ExpireRegKeyNode);
 
     // config node   
     function LINEPayConfigNode(n) {

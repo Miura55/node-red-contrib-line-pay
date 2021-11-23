@@ -1,5 +1,6 @@
 var axios = require('axios');
 var crypto = require('crypto-js');
+var jsonBigint = require('json-bigint');
 const {
     v4: uuidv4
 } = require('uuid');
@@ -44,6 +45,11 @@ module.exports = function (RED) {
             try {
                 let setting = {
                     headers: MakeHeaders('POST', api, node, body),
+                    transformResponse: [
+                        data => {
+                            return jsonBigint.parse(data)
+                        }
+                    ],
                 };
                 res = await axios.post(node.config.uri + api, body, setting);
                 msg.payload = res.data;
@@ -77,6 +83,11 @@ module.exports = function (RED) {
                 try {
                     let setting = {
                         headers: MakeHeaders('POST', api, node, body),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
@@ -113,6 +124,11 @@ module.exports = function (RED) {
                 try {
                     let setting = {
                         headers: MakeHeaders('POST', api, node, body),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
@@ -149,6 +165,11 @@ module.exports = function (RED) {
                 try {
                     let setting = {
                         headers: MakeHeaders('POST', api, node, body),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
@@ -185,6 +206,11 @@ module.exports = function (RED) {
                 try {
                     let setting = {
                         headers: MakeHeaders('POST', api, node, body),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
@@ -242,7 +268,12 @@ module.exports = function (RED) {
             try {
                 let setting = {
                     headers: MakeHeaders('GET', api, node, paramString),
-                    params: params
+                    transformResponse: [
+                        data => {
+                            return jsonBigint.parse(data)
+                        }
+                    ],
+                    params: params,
                 };
                 res = await axios.get(node.config.uri + api, setting);
                 msg.payload = res.data;
@@ -276,6 +307,11 @@ module.exports = function (RED) {
                 try {
                     let setting = {
                         headers: MakeHeaders('GET', api, node, ''),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.get(node.config.uri + api, setting);
                     msg.payload = res.data;
@@ -310,7 +346,6 @@ module.exports = function (RED) {
 
             if (msg.regKey) {
                 try {
-                    let setting = {};
                     let paramString = '';
                     if ('creditCardAuth' in msg.payload) {
                         setting.params = {}
@@ -319,7 +354,14 @@ module.exports = function (RED) {
                             return encodeURIComponent(idx) + '=' + encodeURIComponent(setting.params[idx])
                         }).join('&');
                     }
-                    setting.headers = MakeHeaders('GET', api, node, paramString);
+                    let setting = {
+                        headers: MakeHeaders('GET', api, node, paramString),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
+                    }
                     res = await axios.get(node.config.uri + api, setting);
                     msg.payload = res.data;
                     node.send(msg);
@@ -355,7 +397,12 @@ module.exports = function (RED) {
             if (msg.regKey) {
                 try {
                     let setting = {
-                        headers: MakeHeaders('POST', api, node, body)
+                        headers: MakeHeaders('POST', api, node, body),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
@@ -391,7 +438,12 @@ module.exports = function (RED) {
             if (msg.regKey) {
                 try {
                     let setting = {
-                        headers: MakeHeaders('POST', api, node, {})
+                        headers: MakeHeaders('POST', api, node, {}),
+                        transformResponse: [
+                            data => {
+                                return jsonBigint.parse(data)
+                            }
+                        ],
                     };
                     res = await axios.post(node.config.uri + api, {}, setting);
                     msg.payload = res.data;

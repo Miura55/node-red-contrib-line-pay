@@ -37,7 +37,7 @@ module.exports = function (RED) {
         } else {
             RED.log.error('Config Not Found.');
         }
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let api = '/v3/payments/request';
             let body = msg.payload;
             RED.log.info(`call ${api}`);
@@ -53,10 +53,10 @@ module.exports = function (RED) {
                 };
                 res = await axios.post(node.config.uri + api, body, setting);
                 msg.payload = res.data;
-                node.send(msg);
+                send(msg);
+                done()
             } catch (err) {
-                RED.log.error(err);
-                node.error(err);
+                done(err);
             }
         });
     }
@@ -73,7 +73,7 @@ module.exports = function (RED) {
             RED.log.error('Config Not Found.');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/${transactionId}/confirm`;
             let body = msg.payload;
@@ -91,13 +91,13 @@ module.exports = function (RED) {
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.transactionId is undefined');
+                done('msg.transactionId is undefined');
             }
         });
     }
@@ -114,7 +114,7 @@ module.exports = function (RED) {
             RED.log.error('Config Not Found.');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/authorizations/${transactionId}/capture`;
             let body = msg.payload;
@@ -132,13 +132,13 @@ module.exports = function (RED) {
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.transactionId is undefined');
+                done('msg.transactionId is undefined');
             }
         });
     }
@@ -155,7 +155,7 @@ module.exports = function (RED) {
             RED.log.error('Config Not Found.');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/authorizations/${transactionId}/void`;
             let body = msg.payload;
@@ -173,13 +173,13 @@ module.exports = function (RED) {
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.transactionId is undefined');
+                done('msg.transactionId is undefined');
             }
         });
     }
@@ -196,7 +196,7 @@ module.exports = function (RED) {
             RED.log.error('Config Not Found.');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/${transactionId}/refund`;
             let body = msg.payload;
@@ -214,13 +214,13 @@ module.exports = function (RED) {
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err)
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.transactionId is undefined');
+                done('msg.transactionId is undefined');
             }
         });
     }
@@ -238,7 +238,7 @@ module.exports = function (RED) {
             node.error('Missing config setting')
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let orderId = msg.payload.orderId;
             let fields = msg.payload.fields;
@@ -277,10 +277,10 @@ module.exports = function (RED) {
                 };
                 res = await axios.get(node.config.uri + api, setting);
                 msg.payload = res.data;
-                node.send(msg);
+                send(msg);
+                done();
             } catch (err) {
-                RED.log.error(err);
-                node.error(err);
+                done(err);
             }
         });
     }
@@ -298,7 +298,7 @@ module.exports = function (RED) {
             node.error('Missing config setting')
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/requests/${transactionId}/check`;
             RED.log.info(`call ${api}`);
@@ -307,21 +307,16 @@ module.exports = function (RED) {
                 try {
                     let setting = {
                         headers: MakeHeaders('GET', api, node, ''),
-                        transformResponse: [
-                            data => {
-                                return jsonBigint.parse(data)
-                            }
-                        ],
                     };
                     res = await axios.get(node.config.uri + api, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.transactionId is undefined');
+                done('msg.transactionId is undefined');
             }
         });
     }
@@ -339,7 +334,7 @@ module.exports = function (RED) {
             node.error('Missing config setting');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/check`;
             RED.log.info(`call ${api}`);
@@ -364,13 +359,13 @@ module.exports = function (RED) {
                     }
                     res = await axios.get(node.config.uri + api, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.regKey is undefined');
+                done('msg.regKey is undefined');
             }
         });
     }
@@ -388,7 +383,7 @@ module.exports = function (RED) {
             node.error('Missing config setting');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/payment`;
             let body = msg.payload;
@@ -406,13 +401,13 @@ module.exports = function (RED) {
                     };
                     res = await axios.post(node.config.uri + api, body, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.regKey is undefined');
+                done('msg.regKey is undefined');
             }
         });
     }
@@ -430,7 +425,7 @@ module.exports = function (RED) {
             node.error('Missing config setting');
         }
 
-        node.on('input', async (msg) => {
+        node.on('input', async (msg, send, done) => {
             let regKey = msg.regKey;
             let api = `/v3/payments/preapprovedPay/${regKey}/expire`;
             RED.log.info(`call ${api}`);
@@ -447,13 +442,13 @@ module.exports = function (RED) {
                     };
                     res = await axios.post(node.config.uri + api, {}, setting);
                     msg.payload = res.data;
-                    node.send(msg);
+                    send(msg);
+                    done();
                 } catch (err) {
-                    RED.log.error(err);
-                    node.error(err);
+                    done(err);
                 }
             } else {
-                node.error('msg.regKey is undefined');
+                done('msg.regKey is undefined');
             }
         });
     }

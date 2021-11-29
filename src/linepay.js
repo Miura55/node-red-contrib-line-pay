@@ -158,20 +158,19 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             let transactionId = msg.transactionId;
             let api = `/v3/payments/authorizations/${transactionId}/void`;
-            let body = msg.payload;
             RED.log.info(`call ${api}`);
 
             if (transactionId) {
                 try {
                     let setting = {
-                        headers: MakeHeaders('POST', api, node, body),
+                        headers: MakeHeaders('POST', api, node, {}),
                         transformResponse: [
                             data => {
                                 return jsonBigint.parse(data)
                             }
                         ],
                     };
-                    res = await axios.post(node.config.uri + api, body, setting);
+                    res = await axios.post(node.config.uri + api, {}, setting);
                     msg.payload = res.data;
                     send(msg);
                     done();

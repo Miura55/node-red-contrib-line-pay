@@ -52,7 +52,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "font-awesome/fa-check",
+        icon: "font-awesome/fa-money",
         label: function () {
             return this.name || "Confirm";
         }
@@ -386,7 +386,7 @@
         defaults: {
             name: {
                 value: "",
-                required: true
+                required: false
             },
             uri: {
                 value: "",
@@ -418,10 +418,10 @@
     </div>
     <div class="form-row">
         <label for="node-config-input-channelId"><i class="fa fa-id-card-o"></i>Channel ID</label>
-        <input type="text" id="node-config-input-channelId">
+        <input type="password" id="node-config-input-channelId" autocomplete="off">
     </div>
     <div class="form-row">
         <label for="node-config-input-channelSecret"><i class="fa fa-key"></i>Channel Secret</label>
-        <input type="text" id="node-config-input-channelSecret">
+        <input type="password" id="node-config-input-channelSecret" autocomplete="off">
     </div>
 </script>

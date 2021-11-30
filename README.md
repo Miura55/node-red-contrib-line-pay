@@ -14,7 +14,7 @@ $ npm install node-red-contrib-line-pay
 
 - Select `Manage Pallet`
 - Click `Add Node` tab
-- Type `node-red-contrib-line-pay`
+- Search `node-red-contrib-line-pay`
 - Install
 
 ## Getting Start
@@ -29,8 +29,8 @@ Chose URI below which you want to use environment.
 
 ## Nodes
 ### Common
-- A node which requires transaction ID, set `msg.transactionId`.
-- A node which requires RegKey, set `msg.regKey`.     
+- A node which requires transaction ID, set transaction ID as `msg.transactionId`.
+- A node which requires RegKey, set RegKey as `msg.regKey`.     
 - Another params, set `msg.payload`.
 ### Request
 Call request API.
@@ -153,7 +153,7 @@ This request body is option.
 }
 ```
 
-### CallPayPreapproved
+### PayPreapproved
 Call pay preapproved.
 
 This node requires `msg.regKey`.
@@ -174,3 +174,9 @@ Call Expire regKey API.
 This node requires `msg.regKey`.
 
 No require `msg.payload`.
+
+## Example Flow
+
+![flow](https://i.gyazo.com/223738ac3dc08ec93a977ee2534a35af.png)
+
+This flow source is [line_pay_example_flow.json](examples/line_pay_example_flow.json)

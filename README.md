@@ -1,4 +1,11 @@
 # node-red-contrib-line-pay
+[![Platform](https://img.shields.io/badge/platform-Node--RED-red)](https://nodered.org)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+[![npm version](https://badge.fury.io/js/node-red-contrib-line-pay.svg)](https://badge.fury.io/js/node-red-contrib-line-pay)
+![npm](https://img.shields.io/npm/dt/node-red-contrib-line-pay.svg)
+
+*日本語版は[こちら](https://github.com/Miura55/node-red-contrib-line-pay/blob/main/README_ja.md)*
+
 Node-RED expansion node for LINE Pay
 
 This node uses [LINE Pay API V3](https://pay.line.me/jp/developers/apis/onlineApis?locale=en_US).
@@ -182,4 +189,4 @@ No require `msg.payload`.
 
 ![flow](https://i.gyazo.com/223738ac3dc08ec93a977ee2534a35af.png)
 
-This flow source is [line_pay_example_flow.json](examples/line_pay_example_flow.json)
+This flow source is [line_pay_example_flow.json](https://raw.githubusercontent.com/Miura55/node-red-contrib-line-pay/main/examples/line_pay_example_flow.json).

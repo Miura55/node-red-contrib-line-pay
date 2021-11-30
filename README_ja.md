@@ -1,7 +1,7 @@
 # node-red-contrib-line-pay
-LINE Pay用の拡張ノードです。
+LINE PayをNode-REDで使うための拡張ノードです。
 
-このノードは [LINE Pay API V3](https://pay.line.me/jp/developers/apis/onlineApis?locale=en_US)を利用しています。
+このノードは [LINE Pay API V3](https://pay.line.me/jp/developers/apis/onlineApis?locale=ja_JP)を利用しています。
 ## インストール
 ### npm
 
@@ -12,14 +12,14 @@ $ npm install node-red-contrib-line-pay
 
 ### Node-REDの画面でのインストール
 
-- `Manage Pallet`を選択
-- `Add Node`タブをクリック
+- `パレットの管理`を選択
+- `ノードを追加`タブをクリック
 - `node-red-contrib-line-pay`を検索
 - インストール
 
 ## Getting Start
 1. https://pay.line.me にて、Channel IDとChannel Secretを取得します。
-2. config nodeにChannel IDとChannel Secretを設定します。
+2. config nodeにURIとChannel ID、Channel Secretを設定します。
     
 URIは下記のいずれかを選択してください。 
 - sandbox: https://sandbox-api-pay.line.me
@@ -185,4 +185,4 @@ ExpireRegKey APIを呼び出します。
 ![flow](https://i.gyazo.com/223738ac3dc08ec93a977ee2534a35af.png)
 
 
-このフローのソースは[examples/line_pay_example_flow.json](examples/line_pay_example_flow.json)
+このフローのソースは[examples/line_pay_example_flow.json](https://raw.githubusercontent.com/Miura55/node-red-contrib-line-pay/main/examples/line_pay_example_flow.json)です。

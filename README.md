@@ -74,7 +74,7 @@ Call confirm API.
 
 This node requires `msg.transactionId`.
 
-#### `msg.payload` sample
+- `msg.payload` sample
 ```json
 {
     "amount": 1000,
@@ -87,7 +87,7 @@ Call capture API.
 
 This node requires `msg.transactionId`.
 
-#### `msg.payload` sample
+- `msg.payload` sample
 ```json
 {
     "amount": 1000,
@@ -107,7 +107,8 @@ Call refund API.
 
 This node requires `msg.transactionId`.
 
-#### `msg.payload` sample
+- `msg.payload` sample
+
 This request body is option.
 
 If `msg.payload` is undefined, this API returns refund all price.
@@ -123,8 +124,9 @@ Call payment detail API.
 
 This node requires `msg.transactionId` or `msg.payload.orderId`.
 
-#### `msg.payload` sample
-`msg.payload.fields`is option.
+- `msg.payload` sample
+
+`msg.payload.fields` is option.
 
 ```json
 {
@@ -144,7 +146,8 @@ Call check regKey API.
 
 This node requires `msg.regKey`.
 
-#### `msg.payload` sample
+- `msg.payload` sample
+
 This request body is option.
 
 ```json
@@ -158,7 +161,7 @@ Call pay preapproved.
 
 This node requires `msg.regKey`.
 
-#### `msg.payload` sample
+- `msg.payload` sample
 ```json
 {
     "productName":"Brown pen", 

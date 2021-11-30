@@ -35,7 +35,7 @@ URIは下記のいずれかを選択してください。
 ### Request
 Request APIを呼び出します。
 
-#### `msg.payload`のサンプル 
+- `msg.payload`のサンプル 
 
 ```json
 {
@@ -74,7 +74,7 @@ Confirm APIを呼び出します。
 
 このノードは`msg.transactionId`を必要とします。
 
-#### `msg.payload`のサンプル
+- `msg.payload`のサンプル
 ```json
 {
     "amount": 1000,
@@ -87,7 +87,7 @@ Capture APIを呼び出します。
 
 このノードは`msg.transactionId`を必要とします。
 
-#### `msg.payload`のサンプル 
+- `msg.payload`のサンプル 
 ```json
 {
     "amount": 1000,
@@ -108,7 +108,8 @@ Refund APIを呼び出します。
 
 このノードは`msg.transactionId`を必要とします。
 
-#### `msg.payload`のサンプル
+- `msg.payload`のサンプル
+
 `msg.payload`は任意です。
 
 `msg.payload`が設定されている場合、全額を返金します。
@@ -124,7 +125,8 @@ Detail APIを呼び出します。
 
 このノードは`msg.transactionId`か`msg.payload.orderId`のどちらかを必要とします。
 
-#### `msg.payload`のサンプル 
+- `msg.payload`のサンプル 
+
 `msg.payload.field`は任意です。
 
 ```json
@@ -146,7 +148,8 @@ CheckRegKey APIを呼び出します。
 
 このノードは`msg.regKey`を必要とします。
 
-#### `msg.payload`のサンプル
+- `msg.payload`のサンプル
+
 `msg.payload`は任意です。
 
 ```json
@@ -160,7 +163,7 @@ PayPreapproved APIを呼び出します。
 
 このノードは`msg.regKey`を必要とします。
 
-#### `msg.payload` sample
+- `msg.payload`のサンプル
 ```json
 {
     "productName":"Brown pen", 

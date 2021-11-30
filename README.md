@@ -35,7 +35,7 @@ Chose URI below which you want to use environment.
 ### Request
 Call request API.
 
-#### `msg.payload`sample
+- `msg.payload` sample
 
 ```json
 {
